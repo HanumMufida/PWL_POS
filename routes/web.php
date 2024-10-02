@@ -33,6 +33,8 @@ Route::group(['prefix' =>'user'], function() {
     Route::put('/{id}', [UserController::class,'update']);
     Route::get('/{id}/edit_ajax',[UserController::class, 'edit_ajax']);
     Route::put('/{id}/update_ajax',[UserController::class,'update_ajax']);
+    Route::get('/{id}/delete_ajax',[UserController::class, 'confirm_ajax']);
+    Route::delete('/{id}/delete_ajax',[UserController::class,'delete_ajax']);
     Route::delete('/{id}', [UserController::class, 'destroy']);
 });
 
@@ -41,6 +43,8 @@ Route::group(['prefix' => 'level'], function(){
     Route::post('/list', [LevelController::class, 'list']);
     Route::get('/create', [LevelController::class, 'create']);
     Route::post('/', [LevelController::class, 'store']);
+    Route::get('/create_ajax', [LevelController::class,'create_ajax']);
+    Route::post('/ajax', [LevelController::class,'store_ajax']);
     Route::get('/{id}', [LevelController::class, 'show']);
     Route::get('/{id}/edit', [LevelController::class, 'edit']);
     Route::put('/{id}', [LevelController::class, 'update']);

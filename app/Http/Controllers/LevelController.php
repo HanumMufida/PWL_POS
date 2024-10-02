@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Facades\Validator;
 class LevelController extends Controller
 {
     public function index()
@@ -159,5 +159,43 @@ class LevelController extends Controller
         } catch (\Illuminate\Database\QueryException){
             return redirect('/level')->with('error', 'Data level Gagal dihapus karena terdapat Tabel lain yang terkait dengan data ini');
         }
+    }
+    public function create_ajax(){
+        return view('level.create_ajax');
+    }
+
+    public function store_ajax(Request $request){
+        //cek apakah request berupa ajax
+        if($request->ajax() || $request->wantsJson()){
+            $rules = [
+                'level_kode' => 'required|string|max:10',
+                'level_nama' => 'required|string|max:100'
+            ];
+
+            //use illuminate\Support\Facades\Validator
+            $validator =Validator::make($request->all(), $rules);
+
+            if($validator-> fails()){
+                return response()->json([
+                    'status' => false, //response status, false: error/gagal, true: berhasil
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->erros(),
+                ]);
+            }
+
+            // Simpan data level
+            LevelModel::create([
+                'level_kode' => $request->level_kode,
+                'level_nama' => $request->level_nama,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data level berhasil disimpan'
+            ]);
+        
+
+        }
+        redirect('/');
     }
 }
