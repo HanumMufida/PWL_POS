@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
-use Monolog\Level;
 use Illuminate\Support\Facades\Validator;
+use Monolog\Level;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class LevelController extends Controller
 {
